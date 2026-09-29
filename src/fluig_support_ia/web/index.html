@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fluig Support IA &middot; Apoio ao N2</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Fluig Support IA</h1>
+      <span class="subtitle">Diagnostico tecnico e rascunho de resposta ao cliente</span>
+      <span id="status" class="status" title="Status do ambiente">verificando...</span>
+    </header>
+
+    <main>
+      <section class="panel panel--form">
+        <h2>Chamado</h2>
+        <form id="form">
+          <div class="grid">
+            <label>
+              Chamado
+              <input name="ticket_id" placeholder="ex.: 128394" autocomplete="off" />
+            </label>
+            <label>
+              Cliente
+              <input name="customer" placeholder="ex.: Industria Alfa" autocomplete="off" />
+            </label>
+            <label>
+              Versao do Fluig
+              <input name="fluig_version" placeholder="ex.: 1.8.1" autocomplete="off" />
+            </label>
+            <label>
+              Modulo
+              <select name="module">
+                <option value="">(nao informado)</option>
+                <option>BPM</option>
+                <option>ECM</option>
+                <option>Identity</option>
+                <option>Analytics</option>
+                <option>Portal</option>
+                <option>Dataset</option>
+                <option>Integracao</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Log ou mensagem de erro
+            <textarea name="error_log" rows="6" placeholder="Cole aqui o stack trace ou o trecho de log."></textarea>
+          </label>
+
+          <label>
+            Pergunta / descricao do problema
+            <textarea name="question" rows="4" required placeholder="ex.: Cliente relata que a solicitacao 4471 travou na atividade de aprovacao. O que verificar?"></textarea>
+          </label>
+
+          <div class="actions">
+            <label class="checkbox">
+              <input type="checkbox" name="use_tools" checked />
+              Consultar o ambiente Fluig durante o diagnostico
+            </label>
+            <button type="submit" id="submit">Analisar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel panel--result">
+        <h2>Resultado</h2>
+        <div id="empty" class="empty">Preencha o chamado e clique em <strong>Analisar</strong>.</div>
+        <div id="error" class="error" hidden></div>
+        <div id="result" hidden>
+          <div class="result-head">
+            <span id="confidence" class="badge"></span>
+            <span id="model" class="muted"></span>
+          </div>
+
+          <article class="block">
+            <div class="block-head">
+              <h3>Diagnostico <span class="muted">(interno)</span></h3>
+              <button class="copy" data-copy="diagnosis">Copiar</button>
+            </div>
+            <pre id="diagnosis"></pre>
+          </article>
+
+          <article class="block" id="steps-block">
+            <div class="block-head"><h3>Proximos passos</h3></div>
+            <ul id="next-steps"></ul>
+          </article>
+
+          <article class="block">
+            <div class="block-head">
+              <h3>Rascunho ao cliente</h3>
+              <button class="copy" data-copy="draft">Copiar</button>
+            </div>
+            <pre id="draft"></pre>
+          </article>
+
+          <details class="block" id="tools-block">
+            <summary>Consultas feitas no ambiente (<span id="tools-count">0</span>)</summary>
+            <div id="tool-calls"></div>
+          </details>
+
+          <details class="block" id="citations-block">
+            <summary>Fontes consultadas (<span id="citations-count">0</span>)</summary>
+            <div id="citations"></div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
